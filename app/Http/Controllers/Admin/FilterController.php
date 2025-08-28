@@ -31,11 +31,13 @@ class FilterController extends Controller
      */
     public function create()
     {
-        $category = Category::with('subcategories')
-            ->whereNull('parent_id',null)
+        $categories = Category::with('subcategories')
+            ->whereNull('parent_id')
             ->get();
+
         $title = "Add Filter";
-        return view('admin.filters.add_edit_filter',compact('category','title'));
+
+        return view('admin.filters.add_edit_filter', compact('categories', 'title'));
     }
 
     /**
@@ -43,7 +45,7 @@ class FilterController extends Controller
      */
     public function store(FilterRequest $request)
     {
-        $this->filterService->stor($request->validated());
+        $this->filterService->store($request->validated());
         return redirect()->route('filters.index')->with('success','Filter created successfully');
     }
 
@@ -62,7 +64,7 @@ class FilterController extends Controller
     {
         $filter = Filter::with('categories')->findOrFail($id);
         $category = Category::with('subcategories')
-            ->whereNull('parent_id',null)
+            ->whereNull('parent_id')
             ->where('status',1)
             ->get();
 
@@ -79,7 +81,7 @@ class FilterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FilterRequest $request, string $id)
     {
         $this->filterService->update($id,$request->validated());
         return redirect()->route('filters.index')->with('success','Filter updated successfully');

@@ -79,7 +79,7 @@
                                     <td>
                                         <div style="display: flex; gap: 10px; align-items: center;">
                                             {{-- Edit --}}
-                                            <a href="{{ url('admin/add-edit-subadmin/' . $filter->id) }}" style="color:#3f6ed3">
+                                            <a href="{{ route('filters.edit',$filter->id) }}" style="color:#3f6ed3">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 

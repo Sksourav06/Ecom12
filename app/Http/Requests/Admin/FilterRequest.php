@@ -11,7 +11,7 @@ class FilterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'filter_name' => 'required|string|max:255',
+            'filter_column' => 'required|string|max:255',
+            'sort' => 'nullable|integer|min:0',
+            'status' => 'required|boolean',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'integer|exists:categories,id',
         ];
     }
 }
