@@ -92,6 +92,12 @@
                                 <p>Brands</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('admin/filters') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Filters</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
