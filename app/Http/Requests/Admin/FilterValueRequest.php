@@ -21,19 +21,21 @@ class FilterValueRequest extends FormRequest
      */
     public function rules(): array
     {
-        $filterValueId =$this->route('value');
+        $filterValueId = $this->route('value');
         $filterId = $this->route('filter');
+
         return [
-            'value' => 'required|string|max:255|unique:filter_values,value'.$filterValueId.',id,filter_id,'.$filterId,
+            'value' => 'required|string|max:255|unique:filter_values,value,' . $filterValueId . ',id,filter_id,' . $filterId,
             'sort' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ];
     }
+
     public function messages()
     {
         return [
-            'value.required'=>'Filter value is required',
-            'value.unique'=>'This value already exists',
+            'value.required' => 'Filter value is required',
+            'value.unique' => 'This value already exists',
         ];
     }
 }

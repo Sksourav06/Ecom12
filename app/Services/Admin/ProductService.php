@@ -165,6 +165,13 @@ class ProductService
         // Save product first to get ID
         $product->save();
 
+        if (!empty($data['filter_values'])&& is_array($data['filter_values'])) {
+            $values = array_values(array_filter($data['filter_values']));
+            $product->filterValues()->sync($values);
+        }else{
+            $product->filterValues()->detach();
+        }
+
         // ✅ Save multiple images
         if ($request->filled('product_images')) {
             $imageFiles = json_decode($request->input('product_images'), true);

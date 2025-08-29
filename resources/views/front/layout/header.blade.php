@@ -123,7 +123,7 @@
                 </button>
                 <div class="navbar-collapse justify-content-between collapse" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="/" class="nav-item nav-link">Home</a>
                         @foreach ($categories as $category)
                             @if ($category['menu_status'] == 1)
                                 @if (count($category['subcategories']) > 0)

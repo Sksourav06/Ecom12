@@ -7,12 +7,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3 class="mb-0">Categories Management</h3>
+                        <h3 class="mb-0">{{$title}}-{{$filter->filter_name}}</h3>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">{{ $title }}</li>
+                            <li class="breadcrumb-item"><a href="{{route('filters.index')}}">Filters</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('filter-values.index',$filter->id)}}">Filter Value</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{$title}}</li>
                         </ol>
                     </div>
                 </div>
@@ -57,64 +58,39 @@
                             @endforeach
 
                             {{-- Form Start --}}
-                            <form action="{{ isset($filter)? route('filters.update', $filter->id) : route('filters.store') }}"
+                            <form action="{{ isset($filterValue)? route('filter-values.update', [$filter->id,$filterValue->id]) : route('filter-values.store',$filter->id) }}"
                                   method="post">
 
                                 @csrf
-                                @if (isset($filter))
+                                @if (isset($filterValue))
                                     @method('PUT')
                                 @endif
 
                                 <div class="card-body">
 
                                     {{-- Category Level Dropdown --}}
-                                    <div class="mb-3">
-                                        <label for="category_ids">Categories*</label>
-                                        <select name="category_ids[]" class="form-control" multiple>
-                                            @foreach ($categories as $cat)
-                                                <option value="{{ $cat->id }}"
-                                                        @if(in_array($cat->id, old('category_ids', $selectedCategories ?? []))) selected @endif>
-                                                    {{ $cat->name }}
-                                                </option>
 
-                                                @if (!empty($cat->subcategories))
-                                                    @foreach ($cat->subcategories as $subcat)
-                                                        <option value="{{ $subcat->id }}"
-                                                                @if(in_array($subcat->id, old('category_ids', $selectedCategories ?? []))) selected @endif>
-                                                            &nbsp;&nbsp;— {{ $subcat->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        <small class="text-muted">Hold CTRL(windows) or CMD(Mac) to select multiple</small>
-                                    </div>
                                     <div class="mb-3">
-                                        <label for="filter_name" class="form-label">filter_name</label>
-                                        <input type="text" class="form-control" id="filter_name" name="filter_name"
-                                               placeholder="Enter Category Name"
-                                               value="{{ old('filter_name', $filter->filter_name ?? '') }}">
+                                        <label for="value" class="form-label">Value</label>
+                                        <input type="text" class="form-control" id="value" name="value"
+                                               placeholder="Enter value"
+                                               value="{{ old('value', $filtervalue->value ?? '') }}">
                                     </div>
+
                                     <div class="mb-3">
-                                        <label for="filter_column" class="form-label">filter_column</label>
-                                        <input type="text" class="form-control" id="filter_column" name="filter_column"
-                                               value="{{ old('filter_column', $filter->filter_column ?? '') }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="sort" class="form-label">sort</label>
+                                        <label for="sort" class="form-label">Sort</label>
                                         <input type="number" class="form-control" id="sort" name="sort"
-                                               value="{{ old('sort', $category->sort ?? 0) }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="status">status</label>
-                                        <select name="status" class="form-select">
-                                            <option value="1"{{old('status',$filter->status ?? 1)==1?'selected':''}}>Active</option>
-                                            <option value="0"{{old('status',$filter->status ?? 1)==0?'selected':''}}>Inactive</option>
-                                        </select>
+                                               value="{{ old('sort', $filtervalue->sort ?? 0) }}">
                                     </div>
 
-                                </div>
-                                <div class="card-footer">
+                                    <div class="mb-3">
+                                        <label for="status">Status</label>
+                                        <select name="status" class="form-select">
+                                            <option value="1" {{ old('status', $filtervalue->status ?? 1) == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ old('status', $filtervalue->status ?? 1) == 0 ? 'selected' : '' }}>Inactive</option>
+                                        </select>
+                                    </div>
+                                    <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

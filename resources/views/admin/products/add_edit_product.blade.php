@@ -115,7 +115,7 @@
                                             <option value="">Select</option>
                                             @foreach ($brands as $brand)
                                                 <option value="{{ $brand['id'] }}"
-                                                    {{ old('brand_id', $product['brand_id'] ?? '') == $brand['id'] ? 'setected' : '' }}>
+                                                    {{ old('brand_id', $product['brand_id'] ?? '') == $brand['id'] ? 'selected' : '' }}>
                                                     {{ $brand['name'] }}
                                                 </option>
                                             @endforeach
@@ -402,7 +402,27 @@
                                             Keywords</label>
                                         <textarea class="form-control" id="search_keywords" name="search_keywords" placeholder="Enter search keywords">{{ old('search_keywords', $product->search_keywords ?? '') }}</textarea>
                                     </div>
+                                    @php
+                                        $filters = \App\Models\Filter::with(['values' => function ($q) {
+                                            $q->where('status', 1)->orderBy('sort', 'asc');
+                                        }])->where('status', 1)->orderBy('sort', 'asc')->get();
 
+                                        $selectedValues = isset($product) ? $product->filterValues->pluck('id')->toArray() : [];
+                                    @endphp
+
+                                    @foreach($filters as $filter)
+                                        <div class="mb-3">
+                                            <label>{{ ucwords($filter->filter_name) }}</label>
+                                            <select name="filter_values[{{ $filter->id }}]" class="form-control">
+                                                <option value="">--Select {{ ucwords($filter->filter_name) }}--</option>
+                                                @foreach($filter->values as $value)
+                                                    <option value="{{ $value->id }}" {{ in_array($value->id, $selectedValues) ? 'selected' : '' }}>
+                                                        {{ ucfirst($value->value) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endforeach
                                     <div class="mb-3">
                                         <label for="meta_title" class="form-label">Meta
                                             Title</label>

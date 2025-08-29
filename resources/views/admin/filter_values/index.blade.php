@@ -56,21 +56,12 @@
                                         {{$value->sort}}
                                     </td>
                                     <td>
-                                        @if ($value->status == 1)
-                                        <a class="updateSubadminStatus"
-                                           data-subadmin_id="{{ $filter->id }}" style="color:#3f6ed3"
-                                           href="javascript:void(0)">
-                                            <i class="fas fa-toggle-on" data-status="Active"></i>
-                                        </a>
+                                        @if($value->status == 1)
+                                            <span class="badge bg-success">Active</span>
                                         @else
-                                        <a class="updateSubadminStatus"
-                                           data-subadmin_id="{{ $filter->id }}" style="color:grey"
-                                           href="javascript:void(0)">
-                                            <i class="fas fa-toggle-off" data-status="Inactive"></i>
-                                        </a>
+                                            <span class="badge bg-danger">Inactive</span>
                                         @endif
                                     </td>
-
                                     <td>
                                         <div style="display: flex; gap: 10px; align-items: center;">
                                             {{-- Edit --}}
@@ -79,7 +70,7 @@
                                             </a>
 
                                             {{-- Delete --}}
-                                            <form action="{{ route('filter-values.destroy', [$filter->id, $value->id]) }}" method="POST"
+                                            <form action="{{ route('filter-values.destroy', ['filter' => $filter->id, 'value' => $value->id]) }}" method="POST"
                                                   class="confirmDelete" title="Delete Filter Value"
                                                   data-module="filter" data-id="{{ $filter->id }}">
                                                 @csrf
@@ -101,4 +92,21 @@
         </div>
     </div>
 </main>
+<style>
+    .badge-bg-success {
+        background-color: #28a745;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    .badge-bg-danger {
+        background-color: #dc3545;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+
+</style>
 @endsection
