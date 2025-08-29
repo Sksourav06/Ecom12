@@ -39,13 +39,13 @@ class FilterService
       $filter->categories()->sync($data['category_ids']);
       return $filter;
   }
-  public function destroy($id)
-  {
-      $filter = $this->find($id);
-      $filter->categories()->detach();
-      return $filter->delete();
-  }
-  public function updateFilterstatus($data)
+    public function delete(string $id)
+    {
+        $filter = Filter::findOrFail($id);  // Filter হচ্ছে মডেল
+        $filter->categories()->detach();    // সম্পর্কিত categories আনলিঙ্ক করা
+        return $filter->delete();            // ফিল্টার ডিলিট করা
+    }
+  public function updateFilterStatus($data)
   {
       $status = ($data['status']=='Active')?0:1;
       Filter::where('id',$data['filter_id'])->update(['status'=>$status]);

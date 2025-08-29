@@ -87,6 +87,34 @@ $(document).ready(function () {
             }
         });
     });
+    $(document).on("click", ".updateFilterStatus", function () {
+        var status = $(this).children("i").data("status");  // data-status ব্যবহার করুন
+        var filter_id = $(this).data("filter_id");      // data-subadmin_id ব্যবহার করুন
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/admin/update-filter-status',
+            data: {status: status, filter_id: filter_id},
+            success: function (resp) {
+                if (resp.status !== false) {
+                    // রেসপন্স অনুযায়ী আইকন এবং স্ট্যাটাস আপডেট করা
+                    if (resp.status == 0) {
+                        $("a[data-filter_id='" + filter_id + "']").html("<i class='fas fa-toggle-off' style='color:grey' data-status='Inactive'></i>");
+                    } else if (resp.status == 1) {
+                        $("a[data-filter_id='" + filter_id + "']").html("<i class='fas fa-toggle-on' style='color:#3f6ed3' data-status='Active'></i>");
+                    }
+                } else {
+                    alert("Error: Could not update the filter status.");
+                }
+            },
+            error: function () {
+                alert("Error occurred while updating the filter status.");
+            }
+        });
+    });
     $(document).on("click", ".updateCategoryStatus", function () {
         var status = $(this).children("i").data("status");  // data-status ব্যবহার করুন
         var category_id = $(this).data("category-id");      // data-subadmin_id ব্যবহার করুন

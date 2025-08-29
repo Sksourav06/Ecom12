@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Filter Values</h3>
                             <a style="max-width: 150px; float:right; display: inline-block;"
-                               href="{{ route('filters.index') }}" class="btn btn-block btn-primary">Filter
+                               href="{{ route('filter-values.create',$filter->id) }}" class="btn btn-block btn-primary"> Add Filter Value
                             </a>
                         </div>
                         <!-- /.card-header -->
@@ -37,7 +37,7 @@
                                 </button>
                             </div>
                             @endif
-                            <table id="subadmins" class="table-bordered table-striped table">
+                            <table id="filtervalue" class="table-bordered table-striped table">
                                 <thead>
                                 <tr>
                                     <th>ID</th>

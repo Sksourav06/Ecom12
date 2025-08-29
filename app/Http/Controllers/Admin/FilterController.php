@@ -100,8 +100,16 @@ class FilterController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
-            $status = $this->filterService->updateStatus($data);
-            return response()->json(['status' => $status,'filter_id'=>$data['id']]);
+
+            // যদি filter_id নামে আইডি পাঠানো হয়
+            $status = $this->filterService->updateFilterStatus($data);
+
+            return response()->json([
+                'status' => $status,
+                'filter_id' => $data['filter_id'] ?? null // filter_id থাকতে হবে
+            ]);
         }
+
+        return response()->json(['error' => 'Invalid request'], 400);
     }
 }

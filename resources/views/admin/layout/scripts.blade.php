@@ -267,6 +267,18 @@
                 savedOrder: {!! json_encode($productsSavedOrder ?? null) !!}, // Column order
                 hiddenCols: {!! json_encode($productsHiddenCols ?? []) !!}, // Hidden columns
                 tableName: "products"
+            },
+            {
+                id: "brands", // Table ID
+                savedOrder: {!! json_encode($brandsSavedOrder ?? null) !!}, // Column order
+                hiddenCols: {!! json_encode($brandsHiddenCols ?? []) !!}, // Hidden columns
+                tableName: "brands"
+            },
+            {
+                id: "subadmins", // Table ID
+                savedOrder: {!! json_encode($subadminsSavedOrder ?? null) !!}, // Column order
+                hiddenCols: {!! json_encode($subadminsHiddenCols ?? []) !!}, // Hidden columns
+                tableName: "subadmins"
             }
         ];
 

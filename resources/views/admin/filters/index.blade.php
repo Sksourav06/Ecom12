@@ -26,7 +26,7 @@
                             <h3 class="card-title">Subadmins</h3>
                             <a style="max-width: 150px; float:right; display: inline-block;"
                                href="{{ route('filters.create') }}" class="btn btn-block btn-primary">Add
-                                Sub Admin
+                                filters
                             </a>
                         </div>
                         <!-- /.card-header -->
@@ -38,7 +38,7 @@
                                 </button>
                             </div>
                             @endif
-                            <table id="subadmins" class="table-bordered table-striped table">
+                            <table id="filters" class="table-bordered table-striped table">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -62,14 +62,14 @@
                                     </td>
                                     <td>
                                         @if ($filter->status == 1)
-                                        <a class="updateSubadminStatus"
-                                           data-subadmin_id="{{ $filter->id }}" style="color:#3f6ed3"
+                                        <a class="updateFilterStatus"
+                                           data-filter_id="{{ $filter->id }}" style="color:#3f6ed3"
                                            href="javascript:void(0)">
                                             <i class="fas fa-toggle-on" data-status="Active"></i>
                                         </a>
                                         @else
-                                        <a class="updateSubadminStatus"
-                                           data-subadmin_id="{{ $filter->id }}" style="color:grey"
+                                        <a class="updateFilterStatus"
+                                           data-filter_id="{{ $filter->id }}" style="color:grey"
                                            href="javascript:void(0)">
                                             <i class="fas fa-toggle-off" data-status="Inactive"></i>
                                         </a>

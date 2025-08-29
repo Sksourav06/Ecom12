@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\FilterValueController;
 use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\NoticeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\ProductController as FrontProductController;

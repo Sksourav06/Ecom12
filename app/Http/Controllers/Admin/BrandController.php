@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BrandRequest;
 use App\Models\Brand;
+use App\Models\ColumnPreference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Services\Admin\BrandService;
+use Illuminate\Support\Facades\Auth;
 class BrandController extends Controller
 {
     protected $brandService;
@@ -27,10 +29,21 @@ class BrandController extends Controller
         if ($result['status'] === 'error') {
             return redirect('admin/dashboard')->with('error_message', $result['message']);
         }
+        $brands = $result['brands'];
+        $brandsModule = $result['brandsModule'];
+
+        $columnPrefs = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
+            ->where('table_name', 'brands')
+            ->first();
+
+        $brandsSavedOrder = $columnPrefs ? json_decode($columnPrefs->column_order, true) : null;
+        $brandsHiddenCols = $columnPrefs ? json_decode($columnPrefs->hidden_columns, true) : [];
 
         return view('admin.brands.index', [
-            'brands' => $result['brands'],
-            'brandsModule' => $result['brandsModule']
+            'brands' => $brands,
+            'brandsModule' => $brandsModule,
+            'brandsSavedOrder' => $brandsSavedOrder,
+            'brandsHiddenCols' => $brandsHiddenCols,
         ]);
     }
 
